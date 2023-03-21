@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {OPEN_WEATHER_API_KEY} from '../../config.js';
 import {OpenWeatherInputForm} from './OpenWeatherInputForm.jsx';
 import {Loader} from './Loader';
-import {IWeatherMain} from "../types/types";
+import {IWeatherMain, IGeocoding} from "../types/types";
 
 
 export const OpenWeatherAPI: FC = () => {
@@ -17,7 +17,7 @@ export const OpenWeatherAPI: FC = () => {
         }
     }, [mainInfo])
 
-    function getCityGeo(cityName: string) {
+    function getCityGeo(cityName: string): Promise<any> {
         setIsLoading(true);
 
         return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${OPEN_WEATHER_API_KEY}`)

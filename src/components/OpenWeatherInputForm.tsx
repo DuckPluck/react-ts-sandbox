@@ -4,17 +4,18 @@ interface OpenWeatherInputFormProps {
     getWeather: (cityName: string) => void;
 }
 
-export class OpenWeatherInputForm extends React.Component <OpenWeatherInputFormProps, {search: string}> {
+export class OpenWeatherInputForm extends React.Component <OpenWeatherInputFormProps, { search: string }> {
     constructor(props: OpenWeatherInputFormProps) {
         super(props);
         this.state = {search: 'Moscow'}
     }
 
-    getWeather = this.props.getWeather
+    getWeather = this.props.getWeather;
 
     handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            this.setState({search: e.target.value});
+            const target = e.target as HTMLInputElement;
+            this.setState({search: target.value});
             this.getWeather(this.state.search);
         }
     }
