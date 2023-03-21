@@ -2,17 +2,17 @@ import React, {FC, useEffect, useState} from 'react';
 import {OPEN_WEATHER_API_KEY} from '../../config.js';
 import {OpenWeatherInputForm} from './OpenWeatherInputForm.jsx';
 import {Loader} from './Loader';
-
+import {IWeatherMain} from "../types/types";
 
 
 export const OpenWeatherAPI: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [mainInfo, setMainInfo] = useState<string>('');
+    const [mainInfo, setMainInfo] = useState<IWeatherMain>({temp: 0});
     const [cityName, setCityName] = useState<string>('');
 
     useEffect(() => getWeather('Moscow'), []);
     useEffect(() => {
-        if (mainInfo) {
+        if (cityName) {
             console.log(`Weather in ${cityName} is ${mainInfo.temp} °C`);
         }
     }, [mainInfo])
@@ -41,7 +41,7 @@ export const OpenWeatherAPI: FC = () => {
             .then(data => {
                 setMainInfo(data.main);
                 setIsLoading(false);
-                return mainInfo;
+                // return mainInfo;
             })
             .catch(err => {
                 alert(err);
@@ -49,8 +49,13 @@ export const OpenWeatherAPI: FC = () => {
             });
     }
 
+    // TODO разобраться в чем ошибка ниже + в инпут форм
+
     function getWeather(cityName: string) {
-        getCityGeo(cityName).then(([lat, lon]) => getGeoWeather(lat, lon));
+        getCityGeo(cityName)
+            .then(
+                ([lat, lon]: number[]) => {getGeoWeather(lat, lon)}
+            );
     }
 
     return (

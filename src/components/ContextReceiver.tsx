@@ -1,25 +1,22 @@
-import React, {useContext, useEffect, useState, memo} from 'react';
-import {Context} from '../../context';
+import React, {useContext, useEffect, memo, FC} from 'react';
+import {MyContext} from '../contexts/context';
 
-export function ContextParent() {
-    const {ctx, setCtx} = useContext(Context);
+export const ContextParent: FC = () => {
+    const {isMemo, setIsMemo} = useContext(MyContext);
 
     useEffect(() => console.log('Context Parent rendered'));
 
     function memoHandler() {
-        setCtx({
-            ...ctx,
-            isMemo: true,
-        })
+        setIsMemo(true)
     }
 
     return (
         <>
             <div className='border-box'>
             <p>Context Parent</p>
-    {ctx.isMemo ? <ContextBrokerMemo/> : <ContextBroker/>}
+    {isMemo ? <ContextBrokerMemo/> : <ContextBroker/>}
     <p>Now we can disallow rerender for Context broker:</p>
-    <button onClick={memoHandler}>memo is {ctx.isMemo ? 'on' : 'off'}</button>
+    <button onClick={memoHandler}>memo is {isMemo ? 'on' : 'off'}</button>
 
     </div>
     <hr />
@@ -28,7 +25,7 @@ export function ContextParent() {
 }
 
 
-export function ContextBroker() {
+export const ContextBroker: FC = () => {
     useEffect(() => console.log('Context Broker rendered (!)'));
     return (
         <div className='border-box second'>
@@ -40,30 +37,28 @@ export function ContextBroker() {
 export const ContextBrokerMemo = memo(ContextBroker);
 
 
-export function ContextReceiver() {
-    const {ctx, setCtx} = useContext(Context);
+export const ContextReceiver: FC = () => {
+    const {value, setValue} = useContext(MyContext);
+    const {title} = useContext(MyContext);
 
     useEffect(() => console.log('Context Receiver rendered'));
 
     useEffect(() => {
-        if (ctx.value !== 'Do update') {
-            console.log(`New context value is: ${ctx.value}`);
+        if (value !== 'Do update') {
+            console.log(`New context value is: ${value}`);
         }
-    }, [ctx]);
+    }, [value]);
 
     function updateHandler() {
-        setCtx({
-            ...ctx,
-            value: Math.random(),
-        });
+        setValue(Math.random());
     }
 
 
     return (
         <>
             <div className='border-box third'>
-            <p>{ctx.title}</p>
-            <p>Context random value: {ctx.value}</p>
+            <p>{title}</p>
+            <p>Context random value: {value}</p>
     <button onClick={updateHandler}>Update</button>
         </div>
         </>
