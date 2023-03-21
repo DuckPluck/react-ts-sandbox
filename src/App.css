@@ -63,6 +63,14 @@ button.btn-class:hover {
     border-color: #d364ff;
 }
 
+button.btn-class-activated {
+    background-color: #d364ff;
+}
+
+button.btn-func-activated {
+    background-color: #646cff;
+}
+
 @keyframes logo-spin {
     from {
         transform: rotate(0deg);

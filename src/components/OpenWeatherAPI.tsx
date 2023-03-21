@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {OPEN_WEATHER_API_KEY} from '../../config.js';
 import {OpenWeatherInputForm} from './OpenWeatherInputForm.jsx';
 import {Loader} from './Loader';
-import {IWeatherMain, IGeocoding} from "../types/types";
+import {IWeatherMain} from "../types/types";
 
 
 export const OpenWeatherAPI: FC = () => {
@@ -41,7 +41,6 @@ export const OpenWeatherAPI: FC = () => {
             .then(data => {
                 setMainInfo(data.main);
                 setIsLoading(false);
-                // return mainInfo;
             })
             .catch(err => {
                 alert(err);
@@ -49,7 +48,6 @@ export const OpenWeatherAPI: FC = () => {
             });
     }
 
-    // TODO разобраться в чем ошибка ниже + в инпут форм
 
     function getWeather(cityName: string) {
         getCityGeo(cityName)
