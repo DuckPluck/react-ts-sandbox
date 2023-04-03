@@ -1,17 +1,17 @@
 import React, {FC, useReducer} from 'react';
-import {reducer, initState, ActionKind} from '../../reducer';
+import {reducer, initState, ReducerActionKind, ReducerState, ReducerAction} from '../../reducer';
 
 export const ReducerReceiver: FC = () => {
-    const [state, dispatch] = useReducer(reducer, initState); // <> надо добавить генерик
+    const [state, dispatch] = useReducer<React.Reducer<ReducerState, ReducerAction>>(reducer, initState);
 
     return (
         <>
             <div>
                 <p>Reducer state is: {state.value}</p>
-                <button onClick={() => dispatch({type: ActionKind.INCREMENT})}>+ 1</button>
-                <button onClick={() => dispatch({type: ActionKind.DECREMENT})}>- 1</button>
-                <button onClick={() => dispatch({type: ActionKind.MULTIPLY})}>* 2</button>
-                <button onClick={() => dispatch({type: ActionKind.DIVIDE})}>/ 2</button>
+                <button onClick={() => dispatch({type: ReducerActionKind.INCREMENT})}>+ 1</button>
+                <button onClick={() => dispatch({type: ReducerActionKind.DECREMENT})}>- 1</button>
+                <button onClick={() => dispatch({type: ReducerActionKind.MULTIPLY})}>* 2</button>
+                <button onClick={() => dispatch({type: ReducerActionKind.DIVIDE})}>/ 2</button>
             </div>
             <hr />
         </>

@@ -5,6 +5,10 @@
     text-align: center;
 }
 
+.App {
+    background-color: #242424;
+}
+
 .container {
     display: flex;
     flex-flow: column;

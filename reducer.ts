@@ -2,41 +2,42 @@ export const initState = {
     value: 0,
 }
 
-type State = {
+export type ReducerState = {
     value: number;
 }
 
-export enum ActionKind {
+export enum ReducerActionKind {
     INCREMENT = 'INCREMENT',
     DECREMENT = 'DECREMENT',
     MULTIPLY = 'MULTIPLY',
     DIVIDE = 'DIVIDE',
 }
 
-type Action = {
-    type: ActionKind;
+export type ReducerAction = {
+    type: ReducerActionKind;
 }
 
-export function reducer(state: State, action: Action) {
+export function reducer(state: ReducerState, action: ReducerAction) {
     switch (action.type) {
 
-        case ActionKind.INCREMENT:
+        case ReducerActionKind.INCREMENT:
             console.log(`Reducer: value is incremented by 1`);
             return {...state, value: state.value + 1};
 
-        case ActionKind.DECREMENT:
+        case ReducerActionKind.DECREMENT:
             console.log(`Reducer: value is decremented by 1`);
             return {...state, value: state.value - 1};
 
-        case ActionKind.MULTIPLY:
+        case ReducerActionKind.MULTIPLY:
             console.log(`Reducer: value is multiplied by 2`);
             return {...state, value: state.value * 2};
 
-        case ActionKind.DIVIDE:
+        case ReducerActionKind.DIVIDE:
             console.log(`Reducer: value is divided by 2`);
             return {...state, value: state.value / 2};
 
-        default: throw new Error('Reducer error')
+        default:
+            throw new Error('Reducer error')
     }
 }
 
